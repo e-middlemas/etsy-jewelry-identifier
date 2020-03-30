@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="Product created as a part of the Insight Data Science Program, IDX20A" content="">
+  <meta name="Eleanor Middlemas" content="">
+
+  <title>Neck-Less Searching Web App</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="../static/css/heroic-features.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="https://www.linkedin.com/in/eleanor-middlemas/">LinkedIn</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/e-middlemas/etsy-jewelry-identifier">github</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <!-- Jumbotron Header -->
+    <header class="jumbotron my-4">
+      <h1 class="display-3">Neck-Less Searching</h1>
+      <p class="lead">Instantly find that necklace you've been searching for</p>
+    </header>
+
+<!-- User upload image and preview -->
+       <br><br>
+       <p class="m-0 text-center text-black">First, upload a picture of the necklace you'd like to purchase.</p>
+       <p class="m-0 text-center text-black">Then, click "Locate that Necklace!" to find necklaces that look most similar on Etsy.</p>
+       <br><br>
+        <div align="center"><form action="/results" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" onchange="previewImage(event)"><br>
+            <input type="hidden" name="file" value="{{ originalfile }}">
+	    <br><br><br><br>
+            <input class="btn btn-primary btn-large" type="submit" value="Locate that Necklace!">
+            </form>
+      </div>
+        <br><br>
+        <div align="center">
+            <img style="height:300px;width:300px;display:none" id="your-image"/>
+        </div>
+
+        <br><br>
+        <script>
+            var previewImage = function(event) {
+                var preview = document.getElementById('your-image');
+                preview.src = URL.createObjectURL(event.target.files[0]);
+                preview.style.display = "block";
+            };
+        </script>
+ </div>
+
+<br><br><br>
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Eleanor Middlemas 2020</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
