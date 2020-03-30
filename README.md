@@ -1,0 +1,1 @@
+# etsy-jewelry-identifier
