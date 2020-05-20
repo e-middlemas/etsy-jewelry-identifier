@@ -1,0 +1,24 @@
+Scraping Etsy listings was kind of complicated. 
+
+First, one needs to obtain an Etsy API key. This means one has to apply for a developer account on Etsy. One should then store their Etsy API key into a local text document titled "etsy_api_key.txt" stored in the same directory as this Etsy scraper.
+
+Next, one should ensure they have enough space for the output images. Please create a folder for these images and take of its path.
+
+The scraper works as the following:
+First, the text from the listings is scraped.
+
+1. Scrapes the text from the site. This saves the listing text into a dictionary (text_scraper.run_text_scraper calls text_scraper.scrape_listings) & into a csv titled "raw_textlistings_$DATE.csv"
+
+2. The categories associated with each necklaces is renamed (text_scraper.run_text_scraper calls text_scraper.rename_categories). I don't think this step is necessary for the final product, but it was necessary before when I had originally planned on training the model on the categories of the images (and before I realized the categories were essentially useless).
+
+3. Despite only requesting necklaces from the Etsy API, sometimes it returns a handful of non-necklaces listings. Furthermore, it will also return duplicate listings. text_scraper.run_text_scraper calls text_scraper.delete_duplicates_notnecklaces, which removes duplicates and those necklaces with labels "NotANecklace" from the dataframe that contains the listings with categories renamed. 
+
+4. Now that the dataframe has duplicates removed and only contains listings that are labeled as necklaces, it is output to a csv titled "cleaned_raw_textlistings_$DATE.csv"
+
+Then, using the listing ID from the cleaned text listings, the first of the associated images of the listing is scraped.
+5. image_scraper.run_scraper reads the listing id from cleaned text listings *.csv file via image_scraper.read_listing_ids and saves as a list of strings.
+
+6. image_scraper.run_scraper calls image_scraper.loop_scrape. This loop
+    1. Checks if the image associated with that listing already exists in your temporary image folder. If it does, it skips to the next listingid. This is useful, because often the code will interrupt. 
+    2. If not, image_scraper.loop_scrape calls image_scraper.saveimage, which pings the API using the listid, and downloads the first image associated with the listing. Sometimes, the listing has no image, so that listing will simply be skipped. This is okay, because the way the webapp works is by locating listings based on the image. If the listing has no image, then that listing will never be returned through the webapp. 
+    3. After the image is retrieved through the Etsy API, image_scraper.saveimage saves the image to the user-provided path to the local directory.
