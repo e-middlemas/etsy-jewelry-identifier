@@ -24,7 +24,7 @@ Around 50 users filled out the survey. I found that users were __*four times*__ 
 First, I had to build a database of Etsy Necklaces listings and associated images. This required that I scrape Etsy. Luckily, Etsy has a user-friendly Python module API, allowing one to easily connect to their API in python with a simple user key. <br><br>
 I had to scrape each listing twice: first to scrape the listing ID, any tags, or other user descriptions that may help me label the data later, and then I scraped again with the listing ID to scrape the listing images. I ended up scraping around 20,000 images & associated listings. I then saved the text data, links to Etsy listings, and filepaths to the associated images in a PostgresQL database.<br><br>
 After scraping the data, I performed some initial EDA - namely, plotting the distribution of certain tags and checking to see if tags matched with the images (*found in ./necklace_finder/simple_eda/visualizaing_thedata.ipynb*). Well... surprise, surprise - the tags and other descriptions I scraped ended up being pretty useless. Tags & descriptions were user-defined, subjective, and often incorrect or inaccurate. Numerous listing photos weren't even necklaces.<br>
-<img src="./markdown_images/not-necklaces.png" alt="" style="width:350px;"/><br>
+<img src="./markdown_images/not-necklaces.png" alt="" style="width:250px;"/><br>
 *Examples of Etsy images scraped with the tag "Necklace"*
 <br><br>
 
