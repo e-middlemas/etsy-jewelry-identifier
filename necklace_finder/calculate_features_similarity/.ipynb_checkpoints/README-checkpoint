@@ -1,3 +1,0 @@
-Initially, I used lshash to calculate the similarity between feature vectors. This method was supposed to be able to calculate similarity among feature vectors very quickly. This might be true, but the hashing process *prior* to calculating similarity actually takes a very long time. Not suitable for calculating similarity among 20,000+ feature vectors. 
-
-Instead, I chose to use cosine similarity. Not only is it a bit easier to understand, but it is much faster, and the results are basically the same.
