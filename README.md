@@ -11,12 +11,12 @@ This webapp was motivated by my own experience spending countless hours on Etsy 
 If you had a chance to play with the app, you will have noticed that the webapp *should* return results within a matter of seconds. That's clearly less time than perhaps the hours you may spend searching on Etsy, getting lost in thinking of the appropriate search terms. <br><br>
 __But does my web app do *better* than Etsy in terms of finding similar necklaces?__<br><br>
 To test this, I created a Google survey filled with images. Each question was the same: between the two images below, which one is most similar to the prompted image? I prompted users with 25 randomly-chosen necklace images. For each image, I provided (1) the first image returned by a typical word search query related to the image prompt, and (2) the first image returned by my web app.<br><br>
-![user_survey](google_survey.png)
+![user_survey](./markdown_images/google_survey.png)
 <br><br>
 Around 50 users filled out the survey. I found that users were __*four times*__ more likely to choose the necklace returned by my web app as the "most similar" necklace.<br><br>
 
 # Data analysis pipeline
-![pipeline_image](pipeline.png)
+![pipeline_image](./markdown_images/pipeline.png)
 <br>*Image taken from slides. In fact, the information below is another description of the information found in my demo slides.*<br><br>
 
 ## 1. Build an image database
@@ -24,7 +24,7 @@ Around 50 users filled out the survey. I found that users were __*four times*__ 
 First, I had to build a database of Etsy Necklaces listings and associated images. This required that I scrape Etsy. Luckily, Etsy has a user-friendly Python module API, allowing one to easily connect to their API in python with a simple user key. <br><br>
 I had to scrape each listing twice: first to scrape the listing ID, any tags, or other user descriptions that may help me label the data later, and then I scraped again with the listing ID to scrape the listing images. I ended up scraping around 20,000 images & associated listings. I then saved the text data, links to Etsy listings, and filepaths to the associated images in a PostgresQL database.<br><br>
 After scraping the data, I performed some initial EDA - namely, plotting the distribution of certain tags and checking to see if tags matched with the images (*found in ./necklace_finder/simple_eda/visualizaing_thedata.ipynb*). Well... surprise, surprise - the tags and other descriptions I scraped ended up being pretty useless. Tags & descriptions were user-defined, subjective, and often incorrect or inaccurate. Numerous listing photos weren't even necklaces.<br>
-<img src="not-necklaces.png" alt="" style="width:350px;"/><br>
+<img src="./markdown_images/not-necklaces.png" alt="" style="width:350px;"/><br>
 *Examples of Etsy images scraped with the tag "Necklace"*
 <br><br>
 
@@ -36,7 +36,7 @@ Then, I added four more layers to a pre-trained VGG16 Convolutional Neural Netwo
 
 ## 3. Calculate similar necklaces
 After I attained metrics that seemed reasonable in the CNN, I extracted the *feature vectors* from the layer prior to the classification layer. I stored these feature vectors with each listing in the PostgreSQL database. These feature vectors, composed of 2048 values, gave me a way to extract feature similarity. For the app, I ended up using Cosine Similarity to measure image similarity.<br>
-![necklace-similarity](cosine_similarity.png)
+![necklace-similarity](./markdown_images/cosine_similarity.png)
 <br><br>
 
 ## 4. Make available for everyone
